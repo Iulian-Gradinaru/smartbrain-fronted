@@ -9,35 +9,25 @@ import Signin from "./components/Signin/Signin";
 import Register from "./components/Register/Register";
 import "./App.css";
 
-/**
- * Clarifai imports
- */
-import { APP_ID, USER_ID, PAT, CLARIFAI_URL } from "./clarifai";
-
+const initialState = {
+  input: "",
+  imageUrl: "",
+  box: {},
+  route: "signin",
+  isSignedIn: false,
+  user: {
+    id: "",
+    name: "",
+    email: "",
+    entries: 0,
+    joined: "",
+  },
+};
 class App extends Component {
   constructor() {
     super();
-    this.state = {
-      input: "",
-      imageUrl: "",
-      box: {},
-      route: "signin",
-      isSignedIn: false,
-      user: {
-        id: "",
-        name: "",
-        email: "",
-        entries: 0,
-        joined: "",
-      },
-    };
+    this.state = initialState;
   }
-
-  // componentDidMount() {
-  //   fetch("http://localhost:3000/")
-  //     .then((response) => response.json())
-  //     .then(console.log);
-  // }
 
   loadUser = (data) => {
     this.setState({
@@ -75,40 +65,13 @@ class App extends Component {
 
   onButtonSubmit = () => {
     this.setState({ imageUrl: this.state.input });
-
-    //  * We're building the request body here
-
-    const raw = JSON.stringify({
-      user_app_id: {
-        user_id: USER_ID,
-        app_id: APP_ID,
-      },
-      inputs: [
-        {
-          data: {
-            image: {
-              url: this.state.input,
-            },
-          },
-        },
-      ],
-    });
-
-    //  * We're building the request options here
-
-    const requestOptions = {
+    fetch("http://localhost:3000/clarifai", {
       method: "POST",
-      headers: {
-        Accept: "application/json",
-        Authorization: "Key " + PAT,
-      },
-      body: raw,
-    };
-
-    /**
-     * Sending the request to Clarifai
-     */
-    fetch(CLARIFAI_URL, requestOptions)
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        input: this.state.input,
+      }),
+    })
       .then((response) => response.json()) // We're parsing the response to JSON
       .then((result) => {
         this.displayFaceBox(this.calculateFaceLocation(result));
@@ -121,23 +84,17 @@ class App extends Component {
             }),
           })
             .then((response) => response.json())
-            // .then((user) => {
-            //   console.log(user);
-            // })
             .then((count) => {
               this.setState(Object.assign(this.state.user, { entries: count }));
             });
         }
       })
-
-      // We're getting the face location from the response
       .catch((error) => console.log("error", error)); // We're logging any errors
-    // .predict('53e1df302c079b3db8a0a36033ed2d15', this.state.input)
   };
 
   onRouteChange = (route) => {
     if (route === "signout") {
-      this.setState({ isSignedIn: false });
+      this.setState(initialState);
     } else if (route === "home") {
       this.setState({ isSignedIn: true });
     }
