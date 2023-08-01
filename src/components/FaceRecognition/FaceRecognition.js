@@ -1,7 +1,23 @@
-import React from "react";
-import "./FaceRecognition.css";
+import React from 'react';
+import './FaceRecognition.css';
 
-const FaceRecognition = ({ box, imageUrl }) => {
+export const FaceRecognition = ({ box, imageUrl }) => {
+  // Handle the framing bands for detected faces
+  const renderFaceBoxes = () => {
+    return box.map((faceBox, index) => (
+      <div
+        key={index}
+        className="bounding-box"
+        style={{
+          top: faceBox.topRow,
+          right: faceBox.rightCol,
+          bottom: faceBox.bottomRow,
+          left: faceBox.leftCol,
+        }}
+      ></div>
+    ));
+  };
+
   return (
     <div className="center ma">
       <div className="absolute mt2">
@@ -12,18 +28,8 @@ const FaceRecognition = ({ box, imageUrl }) => {
           width="500px"
           height="auto"
         />
-        <div
-          className="bounding-box"
-          style={{
-            top: box.topRow,
-            right: box.rightCol,
-            bottom: box.bottomRow,
-            left: box.leftCol,
-          }}
-        ></div>
+        {renderFaceBoxes()}
       </div>
     </div>
   );
 };
-
-export default FaceRecognition;
