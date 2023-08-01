@@ -42,20 +42,6 @@ export const App = () => {
     });
   };
 
-  // const calculateFaceLocation = (data) => {
-  //   const clarifaiFace =
-  //     data.outputs[0].data.regions[0].region_info.bounding_box;
-  //   const image = document.getElementById('inputimage');
-  //   const width = Number(image.width);
-  //   const height = Number(image.height);
-  //   return {
-  //     leftCol: clarifaiFace.left_col * width,
-  //     topRow: clarifaiFace.top_row * height,
-  //     rightCol: width - clarifaiFace.right_col * width,
-  //     bottomRow: height - clarifaiFace.bottom_row * height,
-  //   };
-  // };
-
   const calculateFaceLocation = (data) => {
     const regions = data.outputs[0].data.regions;
     const image = document.getElementById('inputimage');
@@ -74,8 +60,6 @@ export const App = () => {
     });
   };
 
-  console.log('functia calculateFaceLocation', calculateFaceLocation);
-
   const displayFaceBox = (box) => {
     setBox(box);
   };
@@ -83,35 +67,6 @@ export const App = () => {
   const onInputChange = (event) => {
     setInput(event.target.value);
   };
-
-  // const onButtonSubmit = () => {
-  //   setImageUrl(input);
-  //   fetch('http://localhost:3000/clarifai', {
-  //     method: 'POST',
-  //     headers: { 'Content-Type': 'application/json' },
-  //     body: JSON.stringify({
-  //       input: input,
-  //     }),
-  //   })
-  //     .then((response) => response.json())
-  //     .then((result) => {
-  //       displayFaceBox(calculateFaceLocation(result));
-  //       if (result) {
-  //         fetch('http://localhost:3000/image', {
-  //           method: 'PUT',
-  //           headers: { 'Content-Type': 'application/json' },
-  //           body: JSON.stringify({
-  //             id: user.id,
-  //           }),
-  //         })
-  //           .then((response) => response.json())
-  //           .then((count) => {
-  //             setUser((prevUser) => ({ ...prevUser, entries: count }));
-  //           });
-  //       }
-  //     })
-  //     .catch((error) => console.log('error', error));
-  // };
 
   const onButtonSubmit = () => {
     setImageUrl(input);
@@ -125,9 +80,9 @@ export const App = () => {
     })
       .then((response) => response.json())
       .then((result) => {
-        console.log(result);
+        console.log('result', result);
         displayFaceBox(calculateFaceLocation(result));
-        console.log('boxonsubmit', box);
+
         if (result && result.outputs[0].data.regions) {
           fetch('http://localhost:3000/image', {
             method: 'PUT',
