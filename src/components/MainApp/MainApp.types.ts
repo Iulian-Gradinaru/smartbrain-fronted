@@ -1,0 +1,18 @@
+export interface Region {
+  region_info: {
+    bounding_box: {
+      left_col: number;
+      top_row: number;
+      right_col: number;
+      bottom_row: number;
+    };
+  };
+}
+
+export interface UserData {
+  id: string;
+  name: string;
+  email: string;
+  entries: number;
+  joined: string;
+}

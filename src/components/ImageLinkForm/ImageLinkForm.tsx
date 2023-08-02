@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { KeyboardEvent } from 'react';
 import './ImageLinkForm.css';
 
-export const ImageLinkForm = ({ onInputChange, onButtonSubmit }) => {
+import { ImageLinkFormProps } from './ImageLinkForm.types';
+
+export const ImageLinkForm: React.FC<ImageLinkFormProps> = ({
+  onInputChange,
+  onButtonSubmit,
+}) => {
   const magicBrainMessage =
     'This Magic Brain will detect faces in your pictures. Give it a try!';
 
-  const handleKeyDown = (event) => {
+  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       onButtonSubmit();
     }

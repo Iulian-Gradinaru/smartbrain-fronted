@@ -1,6 +1,8 @@
 import React from 'react';
 
-export const Rank = ({ name, entries }) => {
+import { RankProps } from './Rank.types';
+
+export const Rank: React.FC<RankProps> = ({ name, entries }) => {
   return (
     <div className="Iulian">
       <div className="center white f3">
