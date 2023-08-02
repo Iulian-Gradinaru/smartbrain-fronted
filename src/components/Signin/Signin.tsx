@@ -2,7 +2,9 @@ import React, { useState, useCallback, ChangeEvent } from 'react';
 
 import { SigninProps } from './Signin.types';
 
-export const Signin: React.FC<SigninProps> = ({ onRouteChange, loadUser }) => {
+export const Signin: React.FC<SigninProps> = (props) => {
+  const { onRouteChange, loadUser } = props;
+
   const [signInEmail, setSignInEmail] = useState<string>('');
   const [signInPassword, setSignInPassword] = useState<string>('');
 

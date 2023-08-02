@@ -2,10 +2,9 @@ import React from 'react';
 
 import { NavigationProps } from './Navigation.types';
 
-export const Navigation: React.FC<NavigationProps> = ({
-  onRouteChange,
-  isSignedIn,
-}) => {
+export const Navigation: React.FC<NavigationProps> = (props) => {
+  const { onRouteChange, isSignedIn } = props;
+
   return (
     <nav style={{ display: 'flex', justifyContent: 'flex-end' }}>
       {isSignedIn ? (

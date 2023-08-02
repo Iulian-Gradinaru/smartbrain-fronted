@@ -2,13 +2,16 @@ import React from 'react';
 
 import { RankProps } from './Rank.types';
 
-export const Rank: React.FC<RankProps> = ({ name, entries }) => {
+import { Container, Current, Entries } from './Rank.styles';
+
+export const Rank: React.FC<RankProps> = (props) => {
+  const { name, entries } = props;
   return (
-    <div className="Iulian">
-      <div className="center white f3">
+    <Container className="Iulian">
+      <Current className="center f3">
         {`${name}, your current entry count is ...`}
-      </div>
-      <div className="center white f1">{entries}</div>
-    </div>
+      </Current>
+      <Entries className="center f1">{entries}</Entries>
+    </Container>
   );
 };

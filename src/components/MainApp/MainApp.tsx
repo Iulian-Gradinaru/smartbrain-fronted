@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import ParticlesBg from 'particles-bg';
-
 import { Navigation } from '../Navigation/Navigation';
 import { Logo } from '../Logo/Logo';
 import { ImageLinkForm } from '../ImageLinkForm/ImageLinkForm';
@@ -10,6 +9,8 @@ import { Signin } from '../Signin/Signin';
 import { Register } from '../Register/Register';
 
 import { Region, UserData } from './MainApp.types';
+
+import { Container, ParticlesContainer } from './MainApp.styles';
 
 export const MainApp: React.FC = () => {
   const [input, setInput] = useState<string>('');
@@ -117,10 +118,10 @@ export const MainApp: React.FC = () => {
   };
 
   return (
-    <div className="main-app">
-      <div className="particles">
+    <Container className="main-app">
+      <ParticlesContainer className="particles">
         <ParticlesBg type="circle" bg={true} />
-      </div>
+      </ParticlesContainer>
 
       <Navigation isSignedIn={isSignedIn} onRouteChange={onRouteChange} />
       {route === 'home' ? (
@@ -138,6 +139,6 @@ export const MainApp: React.FC = () => {
       ) : (
         <Register loadUser={loadUser} onRouteChange={onRouteChange} />
       )}
-    </div>
+    </Container>
   );
 };

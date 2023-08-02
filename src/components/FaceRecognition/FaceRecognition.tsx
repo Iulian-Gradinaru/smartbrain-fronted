@@ -1,15 +1,13 @@
 import React from 'react';
-import './FaceRecognition.css';
+import { BoundingBox, Container } from './FaceRecognition.style';
 
 import { FaceRecognitionProps } from './FaceRecognition.types';
 
-export const FaceRecognition: React.FC<FaceRecognitionProps> = ({
-  box,
-  imageUrl,
-}) => {
+export const FaceRecognition: React.FC<FaceRecognitionProps> = (props) => {
+  const { box, imageUrl } = props;
   return (
     <div className="center ma">
-      <div className="absolute mt2">
+      <Container className=" absolute mt2 ">
         <img
           id="inputimage"
           alt=""
@@ -18,9 +16,9 @@ export const FaceRecognition: React.FC<FaceRecognitionProps> = ({
           height="auto"
         />
         {box.map((faceBox, index) => (
-          <div
+          <BoundingBox
             key={index}
-            className="bounding-box"
+            className="bounding-box Oana"
             style={{
               top: faceBox.region_info.bounding_box.top_row,
               right: faceBox.region_info.bounding_box.right_col,
@@ -29,7 +27,7 @@ export const FaceRecognition: React.FC<FaceRecognitionProps> = ({
             }}
           />
         ))}
-      </div>
+      </Container>
     </div>
   );
 };

@@ -2,10 +2,9 @@ import React, { useState, useCallback, ChangeEvent, MouseEvent } from 'react';
 
 import { RegisterProps } from './Register.types';
 
-export const Register: React.FC<RegisterProps> = ({
-  onRouteChange,
-  loadUser,
-}) => {
+export const Register: React.FC<RegisterProps> = (props) => {
+  const { onRouteChange, loadUser } = props;
+
   const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
