@@ -1,3 +1,6 @@
+/**
+ * Defines the component props interface
+ */
 export interface Region {
   region_info: {
     bounding_box: {
@@ -9,6 +12,9 @@ export interface Region {
   };
 }
 
+/**
+ * Defines the component props interface
+ */
 export interface UserData {
   id: string;
   name: string;

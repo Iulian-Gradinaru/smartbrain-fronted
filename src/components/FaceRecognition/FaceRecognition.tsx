@@ -1,8 +1,18 @@
 import React from 'react';
+
+/**
+ * Imports styles
+ */
 import { BoundingBox, Container } from './FaceRecognition.style';
 
+/**
+ * Imports types
+ */
 import { FaceRecognitionProps } from './FaceRecognition.types';
 
+/**
+ * Displays the component
+ */
 export const FaceRecognition: React.FC<FaceRecognitionProps> = (props) => {
   const { box, imageUrl } = props;
   return (
@@ -18,7 +28,7 @@ export const FaceRecognition: React.FC<FaceRecognitionProps> = (props) => {
         {box.map((faceBox, index) => (
           <BoundingBox
             key={index}
-            className="bounding-box Oana"
+            className="bounding-box"
             style={{
               top: faceBox.region_info.bounding_box.top_row,
               right: faceBox.region_info.bounding_box.right_col,

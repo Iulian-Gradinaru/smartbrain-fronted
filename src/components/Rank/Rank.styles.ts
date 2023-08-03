@@ -1,5 +1,11 @@
+/**
+ * Imports styled
+ */
 import { styled } from '@mui/system';
 
+/**
+ * Styles the Container
+ */
 export const Container = styled('div')(() => {
   return {
     display: 'flex',
@@ -17,6 +23,9 @@ export const Container = styled('div')(() => {
   };
 });
 
+/**
+ * Styles the Current
+ */
 export const Current = styled('div')(() => {
   return {
     color: 'black',
@@ -25,6 +34,9 @@ export const Current = styled('div')(() => {
   };
 });
 
+/**
+ * Styles the Entries
+ */
 export const Entries = styled('div')(() => {
   return {
     color: 'black',

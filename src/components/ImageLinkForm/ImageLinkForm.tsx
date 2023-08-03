@@ -1,6 +1,8 @@
 import React, { KeyboardEvent } from 'react';
 
-import { ImageLinkFormProps } from './ImageLinkForm.types';
+/**
+ * Imports styles
+ */
 import {
   FormContainer,
   Input,
@@ -8,45 +10,20 @@ import {
   Parafraph,
 } from './ImageLinkForm.styles';
 
-// export const ImageLinkForm: React.FC<ImageLinkFormProps> = (props) => {
-//   const { onInputChange, onButtonSubmit } = props;
-//   // const magicBrainMessage =
-//   //   'This Magic Brain will detect faces in your pictures. Give it a try!';
+/**
+ * Imports types
+ */
+import { ImageLinkFormProps } from './ImageLinkForm.types';
 
-//   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-//     if (event.key === 'Enter') {
-//       onButtonSubmit();
-//     }
-//   };
-
-//   return (
-//     <div>
-//       <p className="f3 white">
-//         This Magic Brain will detect faces in your pictures. Give it a try!
-//       </p>
-//       <div className="center">
-//         <div className="form center pa4 br3 shadow-5">
-//           <input
-//             className="f4 pa2 w-70 center"
-//             type="text"
-//             onChange={onInputChange}
-//             onKeyDown={handleKeyDown}
-//           />
-//           <button
-//             className="w-30 grow f4 link ph3 pv2 dib black bg-light-purple"
-//             onClick={onButtonSubmit}
-//           >
-//             Detect
-//           </button>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
+/**
+ * Displays the component
+ */
 export const ImageLinkForm: React.FC<ImageLinkFormProps> = (props) => {
   const { onInputChange, onButtonSubmit } = props;
 
+  /**
+   * Handles triggers onButtonSubmit when the 'Enter' key is pressed.
+   */
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       onButtonSubmit();

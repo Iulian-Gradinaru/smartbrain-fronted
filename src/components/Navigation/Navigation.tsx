@@ -1,12 +1,23 @@
 import React from 'react';
 
+/**
+ * Imports styles
+ */
+import { Container } from './Navigation.styles';
+
+/**
+ * Imports types
+ */
 import { NavigationProps } from './Navigation.types';
 
+/**
+ * Displays the component
+ */
 export const Navigation: React.FC<NavigationProps> = (props) => {
   const { onRouteChange, isSignedIn } = props;
 
   return (
-    <nav style={{ display: 'flex', justifyContent: 'flex-end' }}>
+    <Container>
       {isSignedIn ? (
         <p
           onClick={() => onRouteChange('signout')}
@@ -33,6 +44,6 @@ export const Navigation: React.FC<NavigationProps> = (props) => {
           </p>
         </>
       )}
-    </nav>
+    </Container>
   );
 };

@@ -1,22 +1,48 @@
 import React, { useState, useCallback, ChangeEvent, MouseEvent } from 'react';
 
+/**
+ * Imports types
+ */
 import { RegisterProps } from './Register.types';
 
+/**
+ * Displays the component
+ */
 export const Register: React.FC<RegisterProps> = (props) => {
   const { onRouteChange, loadUser } = props;
 
+  /**
+   * Initializes the name state
+   */
   const [name, setName] = useState<string>('');
+
+  /**
+   * Initializes the email state
+   */
   const [email, setEmail] = useState<string>('');
+
+  /**
+   * Initializes the password state
+   */
   const [password, setPassword] = useState<string>('');
 
+  /**
+   * Callback function to handle name input change
+   */
   const onNameChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
   }, []);
 
+  /**
+   * Callback function to handle email input change
+   */
   const onEmailChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
   }, []);
 
+  /**
+   * Callback function to handle password input change
+   */
   const onPasswordChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       setPassword(event.target.value);
@@ -24,10 +50,14 @@ export const Register: React.FC<RegisterProps> = (props) => {
     []
   );
 
+  /**
+   * Callback function to handle form submission
+   */
   const onSubmitSignIn = useCallback(
     (event: MouseEvent<HTMLInputElement>) => {
       event.preventDefault();
 
+      // Sending user registration data to the server
       fetch('http://localhost:3000/register', {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
@@ -39,6 +69,7 @@ export const Register: React.FC<RegisterProps> = (props) => {
       })
         .then((response) => response.json())
         .then((user) => {
+          // If registration is successful, load user data and change route
           if (user.id) {
             loadUser(user);
             onRouteChange('home');
@@ -48,6 +79,9 @@ export const Register: React.FC<RegisterProps> = (props) => {
     [name, email, password, loadUser, onRouteChange]
   );
 
+  /**
+   * JSX components for name input fields
+   */
   const NameInput = (
     <div className="mt3">
       <label className="db fw6 lh-copy f6" htmlFor="name">
@@ -63,6 +97,9 @@ export const Register: React.FC<RegisterProps> = (props) => {
     </div>
   );
 
+  /**
+   * JSX components for email input fields
+   */
   const EmailInput = (
     <div className="mt3">
       <label className="db fw6 lh-copy f6" htmlFor="email-address">
@@ -78,6 +115,9 @@ export const Register: React.FC<RegisterProps> = (props) => {
     </div>
   );
 
+  /**
+   * JSX components for password input fields
+   */
   const PasswordInput = (
     <div className="mv3">
       <label className="db fw6 lh-copy f6" htmlFor="password">

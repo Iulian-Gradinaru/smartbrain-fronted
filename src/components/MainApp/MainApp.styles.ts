@@ -1,14 +1,20 @@
+/**
+ * Imports styled
+ */
 import { styled } from '@mui/system';
 
-// Styled Container
+/**
+ * Styles the Container
+ */
 export const Container = styled('div')(() => {
   return {
     textAlign: 'center',
-    color: 'red',
   };
 });
 
-// Styled Center
+/**
+ * Styles the Center
+ */
 export const Center = styled('div')(() => {
   return {
     display: 'flex',
@@ -16,7 +22,9 @@ export const Center = styled('div')(() => {
   };
 });
 
-// Styled Particles
+/**
+ * Styles the Particles Container
+ */
 export const ParticlesContainer = styled('div')(() => {
   return {
     position: 'fixed',

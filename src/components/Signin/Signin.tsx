@@ -1,17 +1,36 @@
 import React, { useState, useCallback, ChangeEvent } from 'react';
 
+/**
+ * Imports types
+ */
 import { SigninProps } from './Signin.types';
 
+/**
+ * Displays the component
+ */
 export const Signin: React.FC<SigninProps> = (props) => {
   const { onRouteChange, loadUser } = props;
 
+  /**
+   * Initializes the sign in email state
+   */
   const [signInEmail, setSignInEmail] = useState<string>('');
+
+  /**
+   * Initializes the sign in password state
+   */
   const [signInPassword, setSignInPassword] = useState<string>('');
 
+  /**
+   * Callback function to handle email input change
+   */
   const onEmailChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setSignInEmail(event.target.value);
   }, []);
 
+  /**
+   * Callback function to handle password input change
+   */
   const onPasswordChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       setSignInPassword(event.target.value);
@@ -19,7 +38,11 @@ export const Signin: React.FC<SigninProps> = (props) => {
     []
   );
 
+  /**
+   * Callback function to handle sign-in form submission
+   */
   const onSubmitSignIn = useCallback(() => {
+    // Sending sign-in data to the server for authentication
     fetch('http://localhost:3000/signin', {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
@@ -30,6 +53,7 @@ export const Signin: React.FC<SigninProps> = (props) => {
     })
       .then((response) => response.json())
       .then((user) => {
+        // If sign-in is successful, load user data and change route
         if (user.id) {
           loadUser(user);
           onRouteChange('home');
@@ -37,6 +61,9 @@ export const Signin: React.FC<SigninProps> = (props) => {
       });
   }, [signInEmail, signInPassword, loadUser, onRouteChange]);
 
+  /**
+   * JSX components for email input fields
+   */
   const EmailInput = (
     <div className="mt3">
       <label className="db fw6 lh-copy f6" htmlFor="email-address">
@@ -52,6 +79,9 @@ export const Signin: React.FC<SigninProps> = (props) => {
     </div>
   );
 
+  /**
+   * JSX components for password input fields
+   */
   const PasswordInput = (
     <div className="mv3">
       <label className="db fw6 lh-copy f6" htmlFor="password">

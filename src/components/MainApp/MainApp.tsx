@@ -1,23 +1,63 @@
 import React, { useState } from 'react';
+
+/**
+ * Imports the ParticlesBg component from 'particles-bg'
+ */
 import ParticlesBg from 'particles-bg';
-import { Navigation } from '../Navigation/Navigation';
-import { Logo } from '../Logo/Logo';
-import { ImageLinkForm } from '../ImageLinkForm/ImageLinkForm';
-import { FaceRecognition } from '../FaceRecognition/FaceRecognition';
-import { Rank } from '../Rank/Rank';
-import { Signin } from '../Signin/Signin';
-import { Register } from '../Register/Register';
 
-import { Region, UserData } from './MainApp.types';
+/**
+ * Imports components
+ */
+import { Navigation } from '../Navigation';
+import { Logo } from '../Logo';
+import { ImageLinkForm } from '../ImageLinkForm';
+import { FaceRecognition } from '../FaceRecognition';
+import { Rank } from '../Rank';
+import { Signin } from '../Signin';
+import { Register } from '../Register';
 
+/**
+ * Imports styles
+ */
 import { Container, ParticlesContainer } from './MainApp.styles';
 
+/**
+ * Imports types
+ */
+import { Region, UserData } from './MainApp.types';
+
+/**
+ * Displays the component
+ */
 export const MainApp: React.FC = () => {
+  /**
+   * Initializes the input state
+   */
   const [input, setInput] = useState<string>('');
+
+  /**
+   * Initializes the imageUrl state
+   */
   const [imageUrl, setImageUrl] = useState<string>('');
-  const [box, setBox] = useState<Region[]>([]); // Updated type
+
+  /**
+   * Initializes the box state
+   */
+  const [box, setBox] = useState<Region[]>([]);
+
+  /**
+   * Initializes the route state
+   */
   const [route, setRoute] = useState<string>('signin');
+
+  /**
+   * Initializes the signed In state
+   */
   const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
+
+  /**
+   * Initializes the user In state
+   */
   const [user, setUser] = useState<UserData>({
     id: '',
     name: '',
@@ -26,6 +66,9 @@ export const MainApp: React.FC = () => {
     joined: '',
   });
 
+  /**
+   * Handles the load user data
+   */
   const loadUser = (data: UserData): void => {
     setUser({
       id: data.id,
@@ -36,14 +79,21 @@ export const MainApp: React.FC = () => {
     });
   };
 
+  /**
+   * Handles calculate face locations on the image
+   */
   const calculateFaceLocation = (data: any): Region[] => {
+    // Extracts regions from API response
     const regions: Region[] = data.outputs[0].data.regions;
+
+    // Gets image dimensions
     const image: HTMLImageElement | null = document.getElementById(
       'inputimage'
     ) as HTMLImageElement;
     const width: number = Number(image.width);
     const height: number = Number(image.height);
 
+    // Calculates and returns adjusted bounding box coordinates
     return regions.map((region: Region) => ({
       region_info: {
         bounding_box: {
@@ -57,6 +107,9 @@ export const MainApp: React.FC = () => {
     }));
   };
 
+  /**
+   * Handles display face bounding boxes
+   */
   const displayFaceBox = (box: Region[]): void => {
     setBox(box);
   };
@@ -65,9 +118,14 @@ export const MainApp: React.FC = () => {
     setInput(event.target.value);
   };
 
+  /**
+   * Event handler for button submit
+   */
   const onButtonSubmit = (): void => {
+    // Sets the input URL for the image
     setImageUrl(input);
 
+    // Sends API request to Clarifai for face recognition
     fetch('http://localhost:3000/clarifai', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -77,8 +135,10 @@ export const MainApp: React.FC = () => {
     })
       .then((response) => response.json())
       .then((result) => {
+        // Calls the function to display face bounding boxes
         displayFaceBox(calculateFaceLocation(result));
 
+        // If faces are detected, updates user entry count
         if (result && result.outputs[0].data.regions) {
           fetch('http://localhost:3000/image', {
             method: 'PUT',
@@ -96,7 +156,11 @@ export const MainApp: React.FC = () => {
       .catch((error) => console.log('error', error));
   };
 
+  /**
+   * Event handler for route change
+   */
   const onRouteChange = (route: string): void => {
+    // Updates route and user sign-in status
     if (route === 'signout') {
       setUser({
         id: '',

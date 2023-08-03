@@ -1,8 +1,18 @@
 import React from 'react';
 
+/**
+ * Imports the 'brain' image asset
+ */
 import brain from '../../assets/brain.png';
+
+/**
+ * Imports styles
+ */
 import { TiltContainer, ImgBrain } from './Logo.styles';
 
+/**
+ * Displays the component
+ */
 export const Logo: React.FC = () => {
   return (
     <div className="ma4 mt0">
