@@ -4,12 +4,16 @@ import React, { useState, useCallback, ChangeEvent, MouseEvent } from 'react';
  * Imports types
  */
 import { RegisterProps } from './Register.types';
+import { useHistory, Redirect } from 'react-router-dom';
+import { useAuth } from '../../hooks';
 
 /**
  * Displays the component
  */
 export const Register: React.FC<RegisterProps> = (props) => {
-  const { onRouteChange, loadUser } = props;
+  const { loadUser } = props;
+
+  const { isAuthenticated } = useAuth();
 
   /**
    * Initializes the name state
@@ -32,6 +36,14 @@ export const Register: React.FC<RegisterProps> = (props) => {
   const onNameChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
   }, []);
+
+  const history = useHistory();
+
+  const onRouteChange = (route: string) => {
+    if (route === 'home') {
+      history.push('/home');
+    }
+  };
 
   /**
    * Callback function to handle email input change
@@ -132,6 +144,10 @@ export const Register: React.FC<RegisterProps> = (props) => {
       />
     </div>
   );
+
+  if (isAuthenticated) {
+    return <Redirect to={'/home'} />;
+  }
 
   return (
     <article className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">

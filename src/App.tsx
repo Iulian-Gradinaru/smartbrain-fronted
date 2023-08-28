@@ -1,10 +1,13 @@
 import './App.css';
 import { MainApp } from './components/MainApp/MainApp';
+import { AuthProvider } from './hooks/useAuth';
 
 export const App = () => {
   return (
-    <div className="App">
-      <MainApp />
-    </div>
+    <AuthProvider>
+      <div className="App">
+        <MainApp />
+      </div>
+    </AuthProvider>
   );
 };

@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+
 /**
  * Imports the ParticlesBg component from 'particles-bg'
  */
 import ParticlesBg from 'particles-bg';
+
+import { useAuth } from '../../hooks/useAuth';
 
 /**
  * Imports components
@@ -15,6 +19,7 @@ import { FaceRecognition } from '../FaceRecognition';
 import { Rank } from '../Rank';
 import { Signin } from '../Signin';
 import { Register } from '../Register';
+import { Home } from '../Home/Home';
 
 /**
  * Imports styles
@@ -30,6 +35,7 @@ import { Region, UserData } from './MainApp.types';
  * Displays the component
  */
 export const MainApp: React.FC = () => {
+  const { user, setUser } = useAuth();
   /**
    * Initializes the input state
    */
@@ -54,17 +60,6 @@ export const MainApp: React.FC = () => {
    * Initializes the signed In state
    */
   const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
-
-  /**
-   * Initializes the user In state
-   */
-  const [user, setUser] = useState<UserData>({
-    id: '',
-    name: '',
-    email: '',
-    entries: 0,
-    joined: '',
-  });
 
   /**
    * Handles the load user data
@@ -122,6 +117,7 @@ export const MainApp: React.FC = () => {
    * Event handler for button submit
    */
   const onButtonSubmit = (): void => {
+    if (!user.id) return;
     // Sets the input URL for the image
     setImageUrl(input);
 
@@ -186,23 +182,25 @@ export const MainApp: React.FC = () => {
       <ParticlesContainer className="particles">
         <ParticlesBg type="circle" bg={true} />
       </ParticlesContainer>
-
-      <Navigation isSignedIn={isSignedIn} onRouteChange={onRouteChange} />
-      {route === 'home' ? (
-        <div>
-          <Logo />
-          <Rank name={user.name} entries={user.entries} />
-          <ImageLinkForm
-            onInputChange={onInputChange}
-            onButtonSubmit={onButtonSubmit}
-          />
-          <FaceRecognition box={box} imageUrl={imageUrl} />
-        </div>
-      ) : route === 'signin' ? (
-        <Signin loadUser={loadUser} onRouteChange={onRouteChange} />
-      ) : (
-        <Register loadUser={loadUser} onRouteChange={onRouteChange} />
-      )}
+      <BrowserRouter>
+        <Switch>
+          <Route path={'/signin'}>
+            <Signin loadUser={loadUser} onRouteChange={onRouteChange} />
+          </Route>
+          <Route path={'/register'}>
+            <Register loadUser={loadUser} onRouteChange={onRouteChange} />
+          </Route>
+          <Route path={'/home'}>
+            <Home
+              onButtonSubmit={onButtonSubmit}
+              onInputChange={onInputChange}
+              box={box}
+              imageUrl={imageUrl}
+            />
+          </Route>
+        </Switch>
+        <Navigation isSignedIn={isSignedIn} onRouteChange={onRouteChange} />
+      </BrowserRouter>
     </Container>
   );
 };

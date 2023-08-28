@@ -4,12 +4,16 @@ import React, { useState, useCallback, ChangeEvent } from 'react';
  * Imports types
  */
 import { SigninProps } from './Signin.types';
+import { useAuth } from '../../hooks';
+import { useHistory, Redirect } from 'react-router-dom';
 
 /**
  * Displays the component
  */
 export const Signin: React.FC<SigninProps> = (props) => {
-  const { onRouteChange, loadUser } = props;
+  const { loadUser } = props;
+
+  const { isAuthenticated, login, logout } = useAuth();
 
   /**
    * Initializes the sign in email state
@@ -27,6 +31,18 @@ export const Signin: React.FC<SigninProps> = (props) => {
   const onEmailChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setSignInEmail(event.target.value);
   }, []);
+
+  const history = useHistory();
+
+  const onRouteChange = (route: string) => {
+    if (route === 'home') {
+      history.push('/home');
+    }
+
+    if (route === 'register') {
+      history.push('/register');
+    }
+  };
 
   /**
    * Callback function to handle password input change
@@ -57,6 +73,7 @@ export const Signin: React.FC<SigninProps> = (props) => {
         if (user.id) {
           loadUser(user);
           onRouteChange('home');
+          login();
         }
       });
   }, [signInEmail, signInPassword, loadUser, onRouteChange]);
@@ -96,6 +113,9 @@ export const Signin: React.FC<SigninProps> = (props) => {
       />
     </div>
   );
+  if (isAuthenticated) {
+    return <Redirect to={'/home'} />;
+  }
 
   return (
     <article className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
